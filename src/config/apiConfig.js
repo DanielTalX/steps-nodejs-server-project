@@ -6,6 +6,7 @@ let routes = express();
 
 // api routes v1 (/api/v1)
 routes.use('/posts', posts);
+routes.use('/statistics', statistics);
 logger.info("Initialized routes succesfully.")
 
 module.exports = routes;

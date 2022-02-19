@@ -13,21 +13,21 @@ const router = express.Router();
  * @access: Public
  */
 router.post('/', (async (req, res) => {
-    try {
-      const item = mapToNewPost(req.body);
-      const validationError = postValidation(item);
-      if (validationError) {
-        return res.status(400).send(validationError);
-      }
-
-      const post = new Post(item);
-      const savedItem = await post.save();
-      res.json(mapToPost(savedItem));
-    } catch (error) {
-      logger.error(`Error on ${req.method} ${req.originalUrl} error = `, error);
-      return res.status(500).send("failed to add this post.");
+  try {
+    const item = mapToNewPost(req.body);
+    const validationError = postValidation(item);
+    if (validationError) {
+      return res.status(400).send(validationError);
     }
-  }));
+
+    const post = new Post(item);
+    const savedItem = await post.save();
+    res.json(mapToPost(savedItem));
+  } catch (error) {
+    logger.error(`Error on ${req.method} ${req.originalUrl} error = `, error);
+    return res.status(500).send("failed to add this post.");
+  }
+}));
 
 
 /**
@@ -35,7 +35,9 @@ router.post('/', (async (req, res) => {
  * @description: Get lists of posts according to user request
  * @access: Public
  */
-router.get('/', (async (req, res) => {
+router.get('/',
+  calcReqeustRuntime('addPost'),
+  (async (req, res) => {
     try {
       const filterOptions = mapToFilter(req.query);
       const validationError = filterValidation(filterOptions);
@@ -58,22 +60,24 @@ router.get('/', (async (req, res) => {
  * @description: Get the number of posts according to user request
  * @access: Public
  */
-router.get('/postsnumber', (async (req, res) => {
-  try {
-    const filterOptions = mapToFilter(req.query);
-    const validationError = filterValidation(filterOptions);
-    if (validationError) {
-      return res.status(400).send(validationError);
-    }
-    const query = generateFilterQuery(filterOptions);
-    const postsnumber = await Post.find(query).countDocuments();
-    res.json(postsnumber);
+router.get('/postsnumber',
+  calcReqeustRuntime('addPost'),
+  (async (req, res) => {
+    try {
+      const filterOptions = mapToFilter(req.query);
+      const validationError = filterValidation(filterOptions);
+      if (validationError) {
+        return res.status(400).send(validationError);
+      }
+      const query = generateFilterQuery(filterOptions);
+      const postsnumber = await Post.find(query).countDocuments();
+      res.json(postsnumber);
 
-  } catch (error) {
-    logger.error(`Error on ${req.method} ${req.originalUrl} error = `, error);
-    res.status(500).json({ message: "failed to get posts number." });
-  }
-}));
+    } catch (error) {
+      logger.error(`Error on ${req.method} ${req.originalUrl} error = `, error);
+      res.status(500).json({ message: "failed to get posts number." });
+    }
+  }));
 
 
 module.exports = router;
