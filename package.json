@@ -1,0 +1,42 @@
+{
+  "name": "github-steps-nodejs-server-project",
+  "version": "1.0.0",
+  "description": "steps-backend-challenge.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielTalX/steps-nodejs-server-project.git"
+  },
+  "author": "Daniel Tal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielTalX/steps-nodejs-server-project/issues"
+  },
+  "homepage": "https://github.com/DanielTalX/steps-nodejs-server-project#readme",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "helmet": "^3.22.0",
+    "joi": "^17.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.26.0",
+    "mongoose": "^5.9.13",
+    "nodemon": "^2.0.3",
+    "winston": "^3.6.0",
+    "winston-daily-rotate-file": "^4.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3",
+    "peer": "^0.2.8"
+  }
+}
