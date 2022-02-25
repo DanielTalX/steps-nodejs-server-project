@@ -13,22 +13,24 @@ const router = express.Router();
  * @description: add a new Post to DB
  * @access: Public
  */
-router.post('/', (async (req, res) => {
-  try {
-    const item = mapToNewPost(req.body);
-    const validationError = postValidation(item);
-    if (validationError) {
-      return res.status(400).send(validationError);
-    }
+router.post('/',
+  calcReqeustRuntime('getPosts'),
+  (async (req, res) => {
+    try {
+      const item = mapToNewPost(req.body);
+      const validationError = postValidation(item);
+      if (validationError) {
+        return res.status(400).send(validationError);
+      }
 
-    const post = new Post(item);
-    const savedItem = await post.save();
-    res.json(mapToPost(savedItem));
-  } catch (error) {
-    logger.error(`Error on ${req.method} ${req.originalUrl} error = `, error);
-    return res.status(500).send("failed to add this post.");
-  }
-}));
+      const post = new Post(item);
+      const savedItem = await post.save();
+      res.json(mapToPost(savedItem));
+    } catch (error) {
+      logger.error(`Error on ${req.method} ${req.originalUrl} error = `, error);
+      return res.status(500).send("failed to add this post.");
+    }
+  }));
 
 
 /**
